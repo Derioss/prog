@@ -1,20 +1,59 @@
-import os
-import paramiko
+#!/bin/python3
 
-def nouvelle_co():
+#__ survey_credential.py _______________________________________
+# Author: Frederic MAURY
+# Date  : 2018/09/01
+# Goal  : Survey CMS user credential
+#________________________________________________________
+import paramiko
+import datetime
+from datetime import datetime as dt
+
+###_________________VARIABLE_____________________
+listIp = ('192.168.1.82','192.168.1.82')
+user = "root"
+passwd = "010Mouray045="
+command ="date +'%m/%d/%Y'&&date +'%m/%d/%Y'&&date +'%m/%d/%Y'"
+
+
+#_________________FUNCTION_______________________
+#SSH connect
+def nouvelle_co(ip,user,passwd):
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect('192.168.1.82', username='root', password='010Mouray045=')
+    client.connect(ip, username=user, password=passwd)
     return client
 
-def test():
-    client = nouvelle_co()
-    #stdin, stdout, stderr = client.exec_command("ls")
-    command = "ls"
+#use command and return stdout
+def inject_command(client, command):
     stdin, stdout, stderr = client.exec_command(command)
-    #stdin, stdout, stderr = client.exec_command(command2)
-    for line in stdout.read().splitlines():
-        print(line)
+    stdout = stdout.read().splitlines()
     client.close()
-    return
-test()
+    return stdout
+
+
+#___________________MAIN____________________________
+def main ():
+    for ip in listIp:
+        conNect = nouvelle_co(ip,user,passwd)
+        consoleValue = inject_command(conNect,command)
+        print(consoleValue)
+        for line in consoleValue:
+           line = line.decode('UTF-8')
+           print(line)
+           date2 = dt.strptime(line.split()[0],"%m/%d/%Y")
+           date2=date2.date()
+           firstday = datetime.date.today()
+           seconday = date2
+           diff = firstday - seconday
+           diff = diff.days
+           print(diff)
+           if diff <= 30:
+            print("j'ai gagné")
+
+
+
+
+
+
+main()
