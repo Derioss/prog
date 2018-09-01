@@ -1,0 +1,56 @@
+#!/bin/bash
+
+#__ backupDATA.sh _______________________________________
+# Author: Frederic MAURY
+# Date  : 2018/08/29
+# Goal  : Backup Meeting Servers
+#________________________________________________________
+
+
+ssh_user="configbackup"
+ip_file="./ipfile.txt"
+
+
+#Directory
+BKP_ROOT="/home/backup/CMS"
+DIR_LOG="$BKP_ROOT/log"
+BKP_LOG="$DIR_LOG/backupDATA.log"
+BKP_DATA="$BKP_ROOT/data/ServerBackup"
+BKP_RETENTION=31
+
+#__ FUNCTIONS ___________________________________________
+logger(){
+  echo -e "`date +'%Y%m%d %H:%M:%S'` `hostname` $1"
+  echo -e "`date +'%Y%m%d %H:%M:%S'` `hostname` $1" >> $BKP_LOG 2>&1
+}
+
+
+#__ MAIN ________________________________________________
+
+# Today date
+today=`date +'%Y%m%d'`
+
+logger "START"
+
+# Clean old files (BKP_RETENTION days)
+find $BKP_DATA -type f -mtime +$BKP_RETENTION | xargs rm -fr >> $BKP_LOG 2>&1
+if [ ! -d $BKP_DATA ]; then mkdir -p $BKP_DATA/; fi
+if [ ! -d $DIR_LOG ]; then mkdir -p $DIR_LOG/; fi
+
+# Main FUNCTIONS
+
+while read ip; do
+  logger "$ip"
+  ssh $ssh_user@$ip <<EOF
+  backup snapshot ServerBackup
+EOF
+  sleep 5
+  sftp $ssh_user@$ip <<EOF
+  get ServerBackup.bak "$BKP_DATA/${today}_$ip.bak"
+EOF
+
+
+done < ipfile.txt
+logger "END"
+
+exit
