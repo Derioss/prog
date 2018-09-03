@@ -1,27 +1,22 @@
 # lamp-centos.yml
----
-- hosts: rhel
+- hosts: all
   handlers:
-    - name: restart httpd
-      service: name=httpd state=restarted
+   - name: restart httpd
+     service: name=httpd state=started
   tasks:
-    - name: 1. Installation Apache
-      yum: name=httpd state=present
-    - name: 2. Installation PHP
-      yum: name=php 6 state=present
-    - name: 3. Installation extensions PHP
-      yum: name={{item}} state=present
-      with_items:
-       - php-pdo
-       - php-mysql
-       - php-soap
-       - php-gd
-       - php-pear-MDB2-Driver-mysqli
-    - name: 4. Installation de MariaDB
-      yum: name=mariadb-server
-    - name: 5. Démarrage Apache
-      service: name=httpd state=running enabled=yes
-    - name: 6. Démarrage MariaDB
-      service: name=mariadb state=running enabled=yes
-      notify:
-        - restart httpd
+   - name: 1. Installation Apache
+     yum: name=httpd state=installed
+   - name: 2. Installation PHP
+     yum: name=php state=present
+   - name: 3. Installation extensions PHP
+     yum: name={{item}} state=installed
+     with_items:
+        - php-mysql.x86_64
+   - name: 4. Installation de MariaDB
+     yum: name=mariadb-server
+   - name: 5. Démarrage Apache
+     service: name=httpd state=running enabled=yes
+   - name: 6. Démarrage MariaDB
+     service: name=mariadb state=running enabled=yes
+     notify:
+      - restart httpd
