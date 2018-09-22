@@ -12,7 +12,7 @@ from datetime import datetime as dt
 ###_________________VARIABLE_____________________
 listIp = ('192.168.1.82','192.168.1.82')
 user = "root"
-passwd = "010Mouray045="
+passwd = ""
 command ="date +'%m/%d/%Y'&&date +'%m/%d/%Y'&&date +'%m/%d/%Y'"
 
 
