@@ -91,6 +91,12 @@ def writeCsv(path,heading,values):
         f.write(line)
 
     f.close()
+
+class AllMyFields:
+    def __init__(self, dictionary):
+        for k, v in dictionary.items():
+            setattr(self, k, v)
+
 def main(user,passwd,filePath,Output,heading,values):
 
     listIp = fileInAList(filePath)
