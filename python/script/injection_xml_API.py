@@ -13,6 +13,12 @@ from bs4 import BeautifulSoup
 ############## need to install a parser
  ###https://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-a-parser
 
+def parseLog(file):
+    handler = open(file).read()
+    soup = BeautifulSoup(handler, "xml")
+    for p in soup.find_all('HttpFeedback'):
+        print(p)
+        
 ## Main function for each url feed by "url.txt", i do something
 def main():
 
@@ -47,11 +53,6 @@ def main():
             my_file.write('\n')
             my_file.close # i close the file.
 
-def parseLog(file):
-    handler = open(file).read()
-    soup = BeautifulSoup(handler, "xml")
-    for p in soup.find_all('HttpFeedback'):
-        print(p)
 
 
 
