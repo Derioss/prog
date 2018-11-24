@@ -41,11 +41,11 @@ class TableauNoir:
         """Cette méthode permet d'effacer la surface du tableau"""
         self.surface = ""
 
-    class Test:
-        '''Une classe de test tous simplement'''
-        def afficher():
-            """Fonction chargés d'afficher quelquechose"""
-            print("On affiche la même chose")
-            print("peu importe les données de l'objet ou de la classe")
-        afficher = staticmethod(afficher)
+class Test:
+    '''Une classe de test tous simplement'''
+    def afficher():
+        """Fonction chargés d'afficher quelquechose"""
+        print("On affiche la même chose")
+        print("peu importe les données de l'objet ou de la classe")
+    afficher = staticmethod(afficher)
 
