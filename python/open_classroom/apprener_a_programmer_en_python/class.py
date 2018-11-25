@@ -139,3 +139,60 @@ class Duree:
             nouvelle_duree.min += nouvelle_duree.sec // 60
             nouvelle_duree.sec = nouvelle_duree.sec % 60
         return nouvelle_duree
+
+class Etudiant:
+    """Classe représentant un étudiant.
+    On représente un étudiant par son prénom (attribut prenom), son âge
+    (attribut age) et sa note moyenne (attribut moyenne, entre 0 et 20).
+
+    Paramètre du constructeur :
+        prenom -- le prénom de l'étudiant
+        age -- l'âge de l'étudiant
+        moyenne -- la moyenne de l'étudiant
+        """
+
+    def __init__(self, prenom, age, moyenne):
+        self.prenom = prenom
+        self.age = age
+        self.moyenne = moyenne
+
+    def __repr__(self):
+        return  "<Etudiant {} (âge={}, moyenne={})>".format(self.prenom, self.age, self.moyenne)
+
+etudiants = [
+    Etudiant("Clément", 14, 16),
+    Etudiant("Charles", 12, 15),
+    Etudiant("Oriane", 14, 18),
+    Etudiant("Thomas", 11, 12),
+    Etudiant("Damien", 12, 15),
+
+]
+
+class LigneInventaire:
+    """Classe représentant une ligne d'un inventaire de vente"""
+    def __init__(self, produit, prix, quantite):
+        self.produit = produit
+        self.prix = prix
+        self.quantite = quantite
+
+    def __repr__(self):
+        return "<Ligne d'inventaire {} ({}X{})>".format(self.produit, self.prix, self.quantite)
+
+inventaire = [
+    LigneInventaire("pomme rouge", 1.2, 19),
+    LigneInventaire("orange", 1.4, 24),
+    LigneInventaire("banane", 0.9, 21),
+    LigneInventaire("poire", 1.2, 24),
+]
+
+class AgentSpecial(Personne):
+    """Classe définissant un agent spécial.
+    Elle hérite de la classe Personne"""
+
+    def __init__(self, prenom, nom, matricule):
+        Personne.__init__(self, prenom, nom)
+        self.matricule = matricule
+    def __str__(self):
+        """Méthode appelé lors d'une conversion de l'objet en chaine"""
+        return "Agent {0}, matricule {1}".format(self.nom, self.matricule)
+
