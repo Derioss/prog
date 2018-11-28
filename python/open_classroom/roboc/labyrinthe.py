@@ -6,7 +6,10 @@ class Labyrinthe:
 
     """Classe représentant un labyrinthe."""
 
-    def __init__(self, robot, obstacles):
+    def __init__(self, robot, obstacles, sortie, porte):
         self.robot = robot
         self.grille = {}
+        self.obstables = obstacles
+        self.sortie = sortie
+        self.porte = porte
         # ...

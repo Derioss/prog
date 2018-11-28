@@ -7,6 +7,9 @@ Exécutez-le avec Python pour lancer le jeu.
 """
 
 import os
+from carte import *
+import pickle
+from robot import *
 
 
 # On charge les cartes existantes
@@ -21,7 +24,8 @@ def main():
             with open(chemin, "r") as fichier:
                 contenu = fichier.read()
                 # Création d'une carte, à compléter
-                carte = Carte(contenu)
+                cartes.append(Carte(nom_carte, contenu))
+
 
     # On affiche les cartes existantes
     print("Labyrinthes existants :")
@@ -29,7 +33,14 @@ def main():
     for i, carte in enumerate(cartes):
         print("  {} - {}".format(i + 1, carte.nom))
 
+
 # Si il y a une partie sauvegardée, on l'affiche, à compléter
+
+# j'enregistre les cartes existantes:
+    with open('sauvegarde', wb) as sauvegarde:
+        mon_picker = pickle.Pickler(sauvegarde)
+        mon_picker.dump()
+
 
 # ... Complétez le programme ...
 
