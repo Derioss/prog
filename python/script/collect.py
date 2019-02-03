@@ -19,7 +19,7 @@ heading = [
 values = []
 ## _______________________VARIABLE___________________________
 filePath = "listIp.txt" # chemin du fichier contenant les ip
-url = "http://121.52.155.234/status.xml"
+url = "http://ip/status.xml"
 user = "admin"
 passwd = "1234"
 ##___________________________FUNCTIONS_________________________________
